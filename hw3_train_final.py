@@ -12,6 +12,7 @@ from keras.optimizers import RMSprop, SGD, Adam
 from keras.layers import Conv2D, MaxPooling2D, Flatten, ZeroPadding2D, Input
 from keras.layers.normalization import BatchNormalization
 from keras.preprocessing.image import ImageDataGenerator
+from keras.utils.data_utils import get_file
 from keras.models import load_model
 #from keras.models import Sequential,Model 
 #from keras.layers.core import Dense, Dropout, Activation
@@ -188,8 +189,12 @@ def main(args):
         
     elif args.test:
         x_test = load_test(args.test_data_path)
-        model = load_model(args.save_model_path)
-        prediction_prob = model.predict(x_test)
+        #model = load_model(args.save_model_path)
+
+        model1 = load_model("hw3_model_1.h5")
+        model2 = load_model("hw3_model_2.h5")
+        model3 = load_model("hw3_model_3.h5")
+        prediction_prob = model1.predict(x_test) + model2.predict(x_test) + model3.predict(x_test)
         get_result(prediction_prob, args.outputs_dir)
         
     else:
@@ -210,7 +215,7 @@ if __name__ == '__main__':
                         default='Data/test.csv', dest='test_data_path',
                         help='Path to testing data')
     parser.add_argument('--save_model_path', type=str,
-                        default='model/hw3_model_test.h5', dest='save_model_path',
+                        default='model/hw3_model_test1.h5', dest='save_model_path',
                         help='saved model path')
     parser.add_argument('--results_dir', type=str,
                         default='outputs/output_test.csv', dest='outputs_dir',

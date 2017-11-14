@@ -188,8 +188,11 @@ def main(args):
         
     elif args.test:
         x_test = load_test(args.test_data_path)
-        model = load_model(args.save_model_path)
-        prediction_prob = model.predict(x_test)
+        #model = load_model(args.save_model_path)
+        model1 = load_model('hw3_model_1.h5')
+        model2 = load_model('hw3_model_2.h5')
+        model3 = load_model('hw3_model_3.h5')
+        prediction_prob = model1.predict(x_test) + model2.predict(x_test) + model3.predict(x_test)
         get_result(prediction_prob, args.outputs_dir)
         
     else:
@@ -199,9 +202,9 @@ def main(args):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Image Sentiment Classification")
     group = parser.add_mutually_exclusive_group()
-    group.add_argument('--train', action='store_true', default=True,
+    group.add_argument('--train', action='store_true', default=False,
                         dest='train', help='Input --train to Train')
-    group.add_argument('--test', action='store_true',default=False,
+    group.add_argument('--test', action='store_true',default=True,
                         dest='test', help='Input --infer to Infer')
     parser.add_argument('--train_data_path', type=str,
                         default='data/train.csv', dest='train_data_path',
